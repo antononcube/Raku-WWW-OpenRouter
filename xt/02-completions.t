@@ -31,5 +31,4 @@ dies-ok {
     openrouter-completion('Generate Raku code for a loop over a list', model => 'mistral-blah-blah', :$method)
 };
 
-
 done-testing;
