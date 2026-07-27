@@ -1,0 +1,162 @@
+unit module WWW::OpenRouter::Request;
+
+use JSON::Fast;
+use HTTP::Tiny;
+
+#============================================================
+# POST Tiny call
+#============================================================
+
+proto sub tiny-post(Str :$url!, |) is export {*}
+
+multi sub tiny-post(Str :$url!,
+                    Str :$body!,
+                    Str :api-key(:$auth-key)!,
+                    UInt :$timeout = 10) {
+    my $resp = HTTP::Tiny.post: $url,
+            headers => { authorization => "Bearer $auth-key",
+                         Content-Type => "application/json" },
+            content => $body;
+
+    return $resp<content>.decode("utf-8");
+}
+
+multi sub tiny-post(Str :$url!,
+                    :$body! where *~~ Map,
+                    Str :api-key(:$auth-key)!,
+                    Bool :$json = False,
+                    UInt :$timeout = 10) {
+    if $json {
+        return tiny-post(:$url, body => to-json($body), :$auth-key, :$timeout);
+    }
+    my $resp = HTTP::Tiny.post: $url,
+            headers => { authorization => "Bearer $auth-key",
+                         Content-Type => "application/json" },
+            content => $body;
+    return $resp<content>.decode("utf-8");
+}
+
+#============================================================
+# GET Tiny call
+#============================================================
+
+multi sub tiny-get(Str :$url!,
+                   Str :api-key(:$auth-key)!,
+                   UInt :$timeout = 10) {
+    my $resp = HTTP::Tiny.get: $url,
+            headers => { authorization => "Bearer $auth-key" };
+    return $resp<content>.decode("utf-8");
+}
+
+
+#============================================================
+# Request
+#============================================================
+
+#| OpenRouter request access.
+our proto openrouter-request(Str :$url!,
+                            :$body!,
+                            :api-key(:$auth-key) is copy = Whatever,
+                            UInt :$timeout= 10,
+                            :$format is copy = Whatever,
+                            Str :$method = 'tiny',
+                            ) is export {*}
+
+#| OpenRouter request access.
+multi sub openrouter-request(Str :$url!,
+                            :$body!,
+                            :api-key(:$auth-key) is copy = Whatever,
+                            UInt :$timeout= 10,
+                            :$format is copy = Whatever,
+                            Str :$method = 'tiny'
+                            ) {
+
+    #------------------------------------------------------
+    # Process $format
+    #------------------------------------------------------
+    if $format.isa(Whatever) { $format = 'Whatever' }
+    die "The argument format is expected to be a string or Whatever."
+    unless $format ~~ Str;
+
+    #------------------------------------------------------
+    # Process $method
+    #------------------------------------------------------
+    die "The argument \$method is expected to be a one of 'curl' or 'tiny'."
+    unless $method ∈ <curl tiny>;
+
+    #------------------------------------------------------
+    # Process $auth-key
+    #------------------------------------------------------
+    if $auth-key.isa(Whatever) {
+        if %*ENV<OPENROUTER_API_KEY>:exists {
+            $auth-key = %*ENV<OPENROUTER_API_KEY>;
+        } else {
+            fail %( error => %(
+                message => 'Cannot find OpenRouter authorization key. ' ~
+                        'Please provide a valid key to the argument auth-key, or set the ENV variable OPENROUTER_API_KEY.',
+                code => 401, status => 'NO_API_KEY'));
+        }
+    }
+    die "The argument auth-key is expected to be a string or Whatever."
+    unless $auth-key ~~ Str;
+
+    #------------------------------------------------------
+    # Invoke OpenRouter service
+    #------------------------------------------------------
+    my $res = do given $method.lc {
+        when 'tiny' && !(so $body) {
+            tiny-get(:$url, :$auth-key, :$timeout);
+        }
+        when 'tiny' {
+            tiny-post(:$url, :$body, :$auth-key, :$timeout);
+        }
+        default {
+            die 'Unknown method.'
+        }
+    }
+
+    #------------------------------------------------------
+    # Result
+    #------------------------------------------------------
+    without $res { return Nil; }
+
+    if $format.lc ∈ <asis as-is as_is> { return $res; }
+
+    if $method ∈ <curl tiny> && $res ~~ Str {
+        try {
+            $res = from-json($res);
+        }
+        if $! {
+            note 'Cannot convert from JSON, returning "asis".';
+            return $res;
+        }
+    }
+
+    if $res ~~ Map && ($res<error>:exists) {
+        fail $res;
+    }
+
+    return do given $format.lc {
+        when $_ eq 'values' {
+            if $res<choices>:exists {
+                # Assuming text of chat completion
+                my @res2 = $res<choices>.map({ $_<text> // $_<message><content> }).Array;
+                @res2.elems == 1 ?? @res2[0] !! @res2;
+            } elsif ($res<data>:exists) {
+                # Assuming image generation
+                $res<data>.map({ $_<url> // $_<b64_json> // $_<embedding> }).Array;
+            } elsif ($res<results>:exists) {
+                # Assuming moderation
+                $res<results>.map({ $_<category_scores> // $_<categories> }).Array;
+            } else {
+                $res;
+            }
+        }
+        when $_ ∈ <whatever hash raku> {
+            if $res<choices>:exists {}
+            $res<choices> // $res<data> // $res;
+        }
+        when $_ ∈ <json> { to-json($res); }
+        default { $res; }
+    }
+}

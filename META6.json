@@ -1,0 +1,40 @@
+{
+    "name": "WWW::OpenRouter",
+    "description": "WWW::OpenRouter provides access to the OpenRouter playground (https://openrouter.ai).",
+    "version": "0.0.1",
+    "authors": [
+        "Anton Antonov"
+    ],
+    "auth": "zef:antononcube",
+    "depends": [
+        "HTTP::Tiny:ver<0.2.5+>",
+        "JSON::Fast:ver<0.20+>",
+        "IO::Socket::SSL:ver<0.0.2+>"
+    ],
+    "build-depends": [],
+    "provides": {
+        "WWW::OpenRouter": "lib/WWW/OpenRouter.rakumod",
+        "WWW::OpenRouter::ChatCompletions": "lib/WWW/OpenRouter/ChatCompletions.rakumod",
+        "WWW::OpenRouter::Embeddings": "lib/WWW/OpenRouter/Embeddings.rakumod",
+        "WWW::OpenRouter::Models": "lib/WWW/OpenRouter/Models.rakumod",
+        "WWW::OpenRouter::Request": "lib/WWW/OpenRouter/Request.rakumod"
+    },
+    "license": "Artistic-2.0",
+    "tags": [
+        "ai",
+        "api",
+        "art",
+        "embeddings",
+        "generative art",
+        "generative",
+        "large language model",
+        "llm",
+        "openrouter ai",
+        "openrouter.ai",
+        "OpenRouter",
+        "web service",
+        "web"
+    ],
+    "api": "0",
+    "source-url": "https://github.com/antononcube/Raku-WWW-OpenRouter"
+}
