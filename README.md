@@ -1,4 +1,4 @@
-             # WWW::OpenRouter
+# WWW::OpenRouter
 
 ## In brief
 
@@ -38,17 +38,12 @@ To install the package from the GitHub repository use the shell command:
 zef install https://github.com/antononcube/Raku-WWW-OpenRouter.git
 ```
 
-----
+---
 
-## Usage examples
+## Universal "front-end"
 
-**Remark:** When the authorization key, `auth-key`, is specified to be `Whatever`
-then the functions `openrouter-*` attempt to use the env variable `OPENROUTER_API_KEY`.
-
-### Universal "front-end"
-
-The package has an universal "front-end" function `mistral-playground` for the
-[different functionalities provided by OpenRouter](https://docs.mistral.ai).
+The package has a universal "front-end" function `openrouter-playground` for the
+[different functionalities provided by OpenRouter](https://openrouter.ai/docs).
 
 Here is a simple call for a "chat completion":
 
@@ -71,6 +66,9 @@ openrouter-playground('Where is Roger Rabbit?');
 # 
 # , type => reasoning.text}], refusal => (Any), role => assistant}, native_finish_reason => stop}]
 ```
+
+**Remark:** When the authorization key, `auth-key`, is specified to be `Whatever`
+then the functions `openrouter-*` attempt to use the env variable `OPENROUTER_API_KEY`.
 
 Another one using Bulgarian:
 
@@ -111,7 +109,9 @@ openrouter-models.elems;
 # 340
 ```
 
-### Code generation
+----
+
+## Code generation
 
 There are two types of completions : text and chat. Let us illustrate the differences
 of their usage by Raku code generation. Here is a text completion:
@@ -155,89 +155,101 @@ openrouter-completion(
 
 Here is a chat completion:
 
-```raku
+```raku, results=asis
 openrouter-completion(
         'generate Raku code for making a loop over a list',
         max-tokens => 1024,
         format => 'values');
 ```
-```
-# In Raku, there are several ways to loop over a list depending on whether you want to modify the list, perform a simple action, or use functional programming patterns.
-# 
-# Here are the most common methods:
-# 
-# ### 1. The Standard `for` Loop
-# This is the most common way to iterate over a list.
-# 
-# ```raku
-# my @fruits = <apple banana cherry>;
-# 
-# for @fruits -> $fruit {
-#     say "I love eating $fruit";
-# }
-# ```
-# 
-# ### 2. Using an Index (with `.kv`)
-# If you need both the **index** (key) and the **value**, use the `.kv` (key-value) method.
-# 
-# ```raku
-# my @colors = <red blue green>;
-# 
-# for @colors.kv -> $index, $color {
-#     say "Color #$index is $color";
-# }
-# ```
-# 
-# ### 3. Functional Approach (`map`)
-# If your goal is to **transform** one list into another, use `map`. This is the preferred "Raku way" for data transformation.
-# 
-# ```raku
-# my @numbers = 1.. 5;
-# 
-# # Square every number in the list
-# my @squares = @numbers.map({ $_ ** 2 });
-# 
-# say @squares; # Output: 1 4 9 16 25
-# ```
-# *Note: `$_` is the "default subject" representing the current element in the loop.*
-# 
-# ### 4. The `each` Method
-# If you just want to perform a side effect (like printing) without a full `for` block, you can use `.each`.
-# 
-# ```raku
-# my @names = <Alice Bob Charlie>;
-# 
-# @names.each({ say "Hello $_" });
-# ```
-# 
-# ### 5. Looping with `while`
-# If you need manual control over the iterator (e.g., skipping elements based on complex logic), use a `while` loop with an iterator.
-# 
-# ```raku
-# my @items = <A B C D E>;
-# my $iter := @items.iterator;
-# 
-# while my $item = $iter.next {
-#     say "Processing $item";
-#     # You could add break or complex logic here
-# }
-# ```
-# 
-# ### Summary Table
-# 
-# | Method | Best Use Case |
-# | :--- | :--- |
-# | `for... -> $x` | Standard, readable iteration. |
-# | `for... -> $i, $x` | When you need the index/position. |
-# | `.map` | When you want to create a **new** list from the old one. |
-# | `.each` | Quick, one-liner actions. |
-# | `.grep` | When you want to loop and **filter** items at the same time. |
-# 
-# **Pro-tip:** In Raku, `qw/apple banana/` and `<apple banana>` are shorthand ways to create lists of words, which is very useful when testing loops!
-```
+
+> Here’s a quick “cook‑book” style snippet showing the most common ways to iterate over a list (i.e. an **Array** or **List**) in Raku.
+
+```raku
+# -------------------------------------------------
+# 1️⃣  Simple `for` loop – the classic style
+# -------------------------------------------------
+my @fruits = <apple banana cherry>;
+
+for @fruits -> $fruit {
+    say "I like $fruit";
+}
+# → I like apple
+# → I like banana
+# → I like cherry
 
 
-### Embeddings
+# -------------------------------------------------
+# 2️⃣  `while` loop with an explicit index
+# -------------------------------------------------
+my @numbers = (1..5);
+
+my $i = 0;
+while $i < @numbers {
+    say "Number $i is @numbers[$i]";
+    $i++;
+}
+# → Number 0 is 1
+# → Number 1 is 2
+# → …
+
+
+# -------------------------------------------------
+# 3️⃣  `map` / `for` as a functional transformation
+# -------------------------------------------------
+# If you just want to produce a new list from an existing one:
+my @squared = @numbers.map({ $_ * $_ });
+say @squared;                # (1 4 9 16 25)
+
+
+# -------------------------------------------------
+# 4️⃣  `loop` with a `break` / `continue`
+# -------------------------------------------------
+my @words = <one two three four>;
+
+loop {
+    my $w = shift @words;      # take the first element
+    last unless defined $w;    # stop when the list is empty
+
+    # Do something with $w …
+    say "Processing $w";
+
+    # imagine we want to skip the word "three"
+    continue if $w eq 'three';
+}
+# → Processing one
+# → Processing two
+# → Processing four
+
+
+# -------------------------------------------------
+# 5️⃣  Using `for` with a range (still works like a list)
+# -------------------------------------------------
+for 0..9 -> $digit {
+    say "Digit $digit";
+}
+# → prints 0 … 9
+
+
+# -------------------------------------------------
+# 6️⃣  `each` on a Hash (list of key/value pairs)
+# -------------------------------------------------
+my %person = (
+    name => 'Ada',
+    age  => 28,
+    city => 'London',
+);
+
+for %person.kv -> $key, $value {
+    say "$key => $value";
+}
+# → name => Ada
+# → age => 28
+# → city => London
+```
+
+----
+
+## Embeddings
 
 Embeddings can be obtained with the function `openrouter-embeddings`. Here is an example of finding the embedding vectors
 for each of the elements of an array of strings:
@@ -306,7 +318,9 @@ say to-pretty-table(cross-tabulate(@ct, 'i', 'j', 'dot'), field-names => (^$embs
 **Remark:** Note that the fourth element (the cooking recipe request) is an outlier.
 (Judging by the table with dot products.)
 
-### Chat completions with engineered prompts
+----
+
+## Chat completions with engineered prompts
 
 Here is a prompt for "emojification" (see the
 [Wolfram Prompt Repository](https://resources.wolframcloud.com/PromptRepository/)

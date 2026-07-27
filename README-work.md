@@ -1,4 +1,4 @@
-             # WWW::OpenRouter
+# WWW::OpenRouter
 
 ## In brief
 
@@ -38,17 +38,12 @@ To install the package from the GitHub repository use the shell command:
 zef install https://github.com/antononcube/Raku-WWW-OpenRouter.git
 ```
 
-----
+---
 
-## Usage examples
+## Universal "front-end"
 
-**Remark:** When the authorization key, `auth-key`, is specified to be `Whatever`
-then the functions `openrouter-*` attempt to use the env variable `OPENROUTER_API_KEY`.
-
-### Universal "front-end"
-
-The package has an universal "front-end" function `mistral-playground` for the
-[different functionalities provided by OpenRouter](https://docs.mistral.ai).
+The package has an universal "front-end" function `openrouter-playground` for the
+[different functionalities provided by OpenRouter](https://openrouter.ai/docs).
 
 Here is a simple call for a "chat completion":
 
@@ -56,6 +51,9 @@ Here is a simple call for a "chat completion":
 use WWW::OpenRouter;
 openrouter-playground('Where is Roger Rabbit?');
 ```
+
+**Remark:** When the authorization key, `auth-key`, is specified to be `Whatever`
+then the functions `openrouter-*` attempt to use the env variable `OPENROUTER_API_KEY`.
 
 Another one using Bulgarian:
 
@@ -75,7 +73,9 @@ The current OpenRouter models can be found with the function `openrouter-models`
 openrouter-models.elems;
 ```
 
-### Code generation
+----
+
+## Code generation
 
 There are two types of completions : text and chat. Let us illustrate the differences
 of their usage by Raku code generation. Here is a text completion:
@@ -89,15 +89,16 @@ openrouter-completion(
 
 Here is a chat completion:
 
-```raku
+```raku, results=asis
 openrouter-completion(
         'generate Raku code for making a loop over a list',
         max-tokens => 1024,
         format => 'values');
 ```
 
+----
 
-### Embeddings
+## Embeddings
 
 Embeddings can be obtained with the function `openrouter-embeddings`. Here is an example of finding the embedding vectors
 for each of the elements of an array of strings:
@@ -139,7 +140,9 @@ say to-pretty-table(cross-tabulate(@ct, 'i', 'j', 'dot'), field-names => (^$embs
 **Remark:** Note that the fourth element (the cooking recipe request) is an outlier.
 (Judging by the table with dot products.)
 
-### Chat completions with engineered prompts
+----
+
+## Chat completions with engineered prompts
 
 Here is a prompt for "emojification" (see the
 [Wolfram Prompt Repository](https://resources.wolframcloud.com/PromptRepository/)
