@@ -74,7 +74,7 @@ multi sub OpenRouterChatCompletion(@prompts is copy,
     #------------------------------------------------------
     # Process $max-tokens
     #------------------------------------------------------
-    if $max-tokens.isa(Whatever) { $max-tokens = 64; }
+    if $max-tokens.isa(Whatever) { $max-tokens = 4096; }
     die "The argument \$max-tokens is expected to be Whatever or a positive integer."
     unless $max-tokens ~~ Int && 0 < $max-tokens;
 
