@@ -55,20 +55,22 @@ multi sub tiny-get(Str :$url!,
 
 #| OpenRouter request access.
 our proto openrouter-request(Str :$url!,
-                            :$body!,
-                            :api-key(:$auth-key) is copy = Whatever,
-                            UInt :$timeout= 10,
-                            :$format is copy = Whatever,
-                            Str :$method = 'tiny',
+                             :$body!,
+                             :api-key(:$auth-key) is copy = Whatever,
+                             UInt :$timeout= 10,
+                             :$format is copy = Whatever,
+                             Str :$method = 'tiny',
+                             Str:D :$http-method = 'POST'
                             ) is export {*}
 
 #| OpenRouter request access.
 multi sub openrouter-request(Str :$url!,
-                            :$body!,
-                            :api-key(:$auth-key) is copy = Whatever,
-                            UInt :$timeout= 10,
-                            :$format is copy = Whatever,
-                            Str :$method = 'tiny'
+                             :$body!,
+                             :api-key(:$auth-key) is copy = Whatever,
+                             UInt :$timeout= 10,
+                             :$format is copy = Whatever,
+                             Str :$method = 'tiny',
+                             Str:D :$http-method = 'POST'
                             ) {
 
     #------------------------------------------------------
@@ -104,7 +106,7 @@ multi sub openrouter-request(Str :$url!,
     # Invoke OpenRouter service
     #------------------------------------------------------
     my $res = do given $method.lc {
-        when 'tiny' && !(so $body) {
+        when 'tiny' && $http-method.uc eq 'GET' {
             tiny-get(:$url, :$auth-key, :$timeout);
         }
         when 'tiny' {
