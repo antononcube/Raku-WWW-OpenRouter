@@ -1,15 +1,14 @@
 {
     "name": "WWW::OpenRouter",
     "description": "WWW::OpenRouter provides access to the OpenRouter playground (https://openrouter.ai).",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "authors": [
         "Anton Antonov"
     ],
     "auth": "zef:antononcube",
     "depends": [
         "HTTP::Tiny:ver<0.2.5+>",
-        "JSON::Fast:ver<0.20+>",
-        "IO::Socket::SSL:ver<0.0.2+>"
+        "JSON::Fast:ver<0.20+>"
     ],
     "build-depends": [],
     "provides": {
