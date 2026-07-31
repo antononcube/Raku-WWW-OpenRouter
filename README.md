@@ -125,6 +125,35 @@ openrouter-models.elems;
 # 336
 ```
 
+Video generating models can be found by setting the argument `:output(:$output-modalities)` to "video":
+
+```raku
+.say for openrouter-models(output => 'video').map(*<name>).sort
+```
+
+```
+# Alibaba: HappyHorse 1.0
+# Alibaba: HappyHorse 1.1
+# Alibaba: Wan 2.6
+# Alibaba: Wan 2.7
+# ByteDance: Seedance 1.5 Pro
+# ByteDance: Seedance 2.0
+# ByteDance: Seedance 2.0 Fast
+# Google: Veo 3.1
+# Google: Veo 3.1 Fast
+# Google: Veo 3.1 Lite
+# Kling: Video O1
+# Kling: Video v3.0 Pro
+# Kling: Video v3.0 Standard
+# MiniMax: H3
+# MiniMax: Hailuo 2.3
+# OpenAI: Sora 2 Pro
+# Runway: Aleph 2.0
+# Runway: Gen-4.5
+# xAI: Grok Imagine Video
+# xAI: Grok Imagine Video 1.5
+```
+
 ----
 
 ## Code generation

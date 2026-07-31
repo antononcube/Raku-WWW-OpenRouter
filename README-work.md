@@ -73,6 +73,12 @@ The current OpenRouter models can be found with the function `openrouter-models`
 openrouter-models.elems;
 ```
 
+Video generating models can be found by setting the argument `:output(:$output-modalities)` to "video":
+
+```raku
+.say for openrouter-models(output => 'video').map(*<name>)
+```
+
 ----
 
 ## Code generation
