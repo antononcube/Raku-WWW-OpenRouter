@@ -72,13 +72,17 @@ our proto openrouter-models(|) is export {*}
 
 multi sub openrouter-models(
         :api-key(:$auth-key) = Whatever,
+        :output(:output-type(:$output-modalities)) = Whatever,
         UInt :$timeout = 10,
         :$format = Whatever,
         Str :$method = 'tiny',
         Str :$base-url = openrouter-base-url) {
     my $url = $base-url ~ '/models';
-    return openrouter-request(:$url, body => '', :$auth-key, :$timeout,
-                              :$format, :$method);
+    if $output-modalities ~~ Str:D {
+        my $output_modalities = $output-modalities.lc;
+        $url ~= "?output_modalities=$output_modalities"
+    }
+    return openrouter-request(:$url, body => '', :$auth-key, :$timeout, :$format, :$method, http-method => 'GET')
 }
 
 #============================================================
