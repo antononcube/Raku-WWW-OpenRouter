@@ -238,8 +238,6 @@ llm-synthesize('Hi! What model are you? From which service? When you were traine
 - "WWW::OpenRouter" is loaded in each chatbook session
 - The magic cell `%%openrouter` can be used to access with OpenRouter's LLMs
 
-For more details see the notebook ["Raku-access-to-XAI-LLMs.ipynb"](docs/Raku-access-to-XAI-LLMs.ipynb) or [AA1].
-
 --------
 
 ## References
