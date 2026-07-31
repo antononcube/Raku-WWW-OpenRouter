@@ -1,4 +1,7 @@
 Changes of the Raku package "WWW::OpenRouter".
 
-2026-07-27 0.1.1
+2026-07-31 0.0.2
+    - Documentation update.
+
+2026-07-27 0.0.1
     - First version.

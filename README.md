@@ -42,7 +42,7 @@ zef install https://github.com/antononcube/Raku-WWW-OpenRouter.git
 
 ## Universal "front-end"
 
-The package has a universal "front-end" function `openrouter-playground` for the
+The package has an universal "front-end" function `openrouter-playground` for the
 [different functionalities provided by OpenRouter](https://openrouter.ai/docs).
 
 Here is a simple call for a "chat completion":
@@ -52,18 +52,39 @@ use WWW::OpenRouter;
 openrouter-playground('Where is Roger Rabbit?');
 ```
 ```
-# [{finish_reason => stop, index => 0, logprobs => (Any), message => {content => User Safety: safe, reasoning => 
-# We need to determine if the user input "Where is Roger Rabbit?" is safe. It's a benign question about a character. No harmful content. So safe.
+# [{finish_reason => stop, index => 0, logprobs => (Any), message => {content => Roger Rabbit is a fictional character from the 1988 film *Who Framed Roger Rabbit*, a live-action/animated hybrid movie. In the story, he is a cartoon rabbit who lives in the fictional city of **Dipper**, a 1940s-style metropolis where cartoons and live-action characters coexist. The film is set in this fictional world, so Roger Rabbit is not located in a real-world place but rather within the movie's narrative universe. 
 # 
-# There is no assistant response provided in the conversation. So we only output User Safety: safe. According to format: "User Safety: safe or unsafe rating of the user input". If no assistant response present, we omit Response Safety line. So just output "User Safety: safe". Let's ensure no extra text.
+# If you're asking about a specific scene or context, feel free to clarify! 😊
+# , reasoning => Okay, the user is asking "Where is Roger Rabbit?" Hmm, I need to figure out what exactly they're referring to. Roger Rabbit is a character from the movie "Who Framed Roger Rabbit," right? The movie is a mix of live-action and animation, set in the 1940s. The main character is a cartoon rabbit who gets involved in a murder mystery.
 # 
+# So, the first thing I should do is confirm if they're asking about the movie or maybe a different context. Since "Roger Rabbit" is pretty specific, it's likely the movie. But maybe they're referring to something else, like a book or another media? I should check if there are other references to Roger Rabbit.
 # 
-# , reasoning_details => [{format => unknown, index => 0, text => 
-# We need to determine if the user input "Where is Roger Rabbit?" is safe. It's a benign question about a character. No harmful content. So safe.
+# Assuming it's the movie, the next step is to explain where Roger Rabbit is in the story. The movie is set in the 1940s, and the plot revolves around a detective trying to solve a murder that involves a cartoon character. Roger Rabbit is the titular character, a toon who is mistaken for a human. He's in the animated sequences, interacting with live-action characters.
 # 
-# There is no assistant response provided in the conversation. So we only output User Safety: safe. According to format: "User Safety: safe or unsafe rating of the user input". If no assistant response present, we omit Response Safety line. So just output "User Safety: safe". Let's ensure no extra text.
+# The user might be asking about his location in the movie's timeline. Since the story is set in a specific time and place, maybe they want to know the geographical location. The movie is set in the fictional city of Dipper, which is a mix of a 1940s city with some cartoon elements. So, Roger Rabbit is in Dipper, California.
 # 
+# Alternatively, if the user is asking where to find Roger Rabbit in real life, that's a different question. But since Roger Rabbit is a fictional character, he doesn't exist in the real world. Unless they're referring to a specific event or a new adaptation, but I don't recall any recent ones.
 # 
+# Another angle: maybe the user is confused about the movie's release or where it was filmed. The movie was released in 1988 and was filmed in various locations, including Los Angeles. But the story is set in a fictional city.
+# 
+# Wait, could there be a misunderstanding? Maybe they're thinking of a different Roger Rabbit? Like a person or another character? But I don't think so. The name is pretty unique.
+# 
+# So, putting it all together, the answer should clarify that Roger Rabbit is a fictional character from the 1988 movie "Who Framed Roger Rabbit," set in the fictional city of Dipper. He's part of the animated sequences in the film. If they need more details, like specific scenes or the plot, I can elaborate. But the main point is that he's in the movie's fictional setting.
+# , reasoning_details => [{format => unknown, index => 0, text => Okay, the user is asking "Where is Roger Rabbit?" Hmm, I need to figure out what exactly they're referring to. Roger Rabbit is a character from the movie "Who Framed Roger Rabbit," right? The movie is a mix of live-action and animation, set in the 1940s. The main character is a cartoon rabbit who gets involved in a murder mystery.
+# 
+# So, the first thing I should do is confirm if they're asking about the movie or maybe a different context. Since "Roger Rabbit" is pretty specific, it's likely the movie. But maybe they're referring to something else, like a book or another media? I should check if there are other references to Roger Rabbit.
+# 
+# Assuming it's the movie, the next step is to explain where Roger Rabbit is in the story. The movie is set in the 1940s, and the plot revolves around a detective trying to solve a murder that involves a cartoon character. Roger Rabbit is the titular character, a toon who is mistaken for a human. He's in the animated sequences, interacting with live-action characters.
+# 
+# The user might be asking about his location in the movie's timeline. Since the story is set in a specific time and place, maybe they want to know the geographical location. The movie is set in the fictional city of Dipper, which is a mix of a 1940s city with some cartoon elements. So, Roger Rabbit is in Dipper, California.
+# 
+# Alternatively, if the user is asking where to find Roger Rabbit in real life, that's a different question. But since Roger Rabbit is a fictional character, he doesn't exist in the real world. Unless they're referring to a specific event or a new adaptation, but I don't recall any recent ones.
+# 
+# Another angle: maybe the user is confused about the movie's release or where it was filmed. The movie was released in 1988 and was filmed in various locations, including Los Angeles. But the story is set in a fictional city.
+# 
+# Wait, could there be a misunderstanding? Maybe they're thinking of a different Roger Rabbit? Like a person or another character? But I don't think so. The name is pretty unique.
+# 
+# So, putting it all together, the answer should clarify that Roger Rabbit is a fictional character from the 1988 movie "Who Framed Roger Rabbit," set in the fictional city of Dipper. He's part of the animated sequences in the film. If they need more details, like specific scenes or the plot, I can elaborate. But the main point is that he's in the movie's fictional setting.
 # , type => reasoning.text}], refusal => (Any), role => assistant}, native_finish_reason => stop}]
 ```
 
@@ -76,22 +97,17 @@ Another one using Bulgarian:
 openrouter-playground('Колко групи могат да се намерят в този облак от точки.', max-tokens => 300, format => 'values');
 ```
 ```
-# За да ви отговоря на този въпрос, **трябва да прикачите изображението или да опишете облака от точки**, за който говорите.
+# Okay, the user is asking: "Колко групи могат да се намерят в този облак от точки." which translates to "How many groups can be found in this cloud of points." But they haven't provided the actual cloud of points. Hmm, that's a problem. Without the data, I can't compute anything.
 # 
-# В математиката и анализа на данни (Data Science) броят на групите в един облак от точки зависи от няколко фактора:
+# Wait, maybe they forgot to include the image or the data set? In some contexts, maybe they're referring to a standard problem, but I don't recall any specific "cloud of points" that's commonly used. Maybe it's a translation issue or a missing attachment.
 # 
-# 1.  **Методът на групиране (Clustering):**
-#     *   Ако използвате алгоритъм като **K-means**, вие сами определяте колко групи (кластера) искате да има.
-#     *   Ако използвате алгоритъм като **DBSCAN**, той сам открива броя на групите въз основа на гъстотата на точките (това е най-добрият метод за "облаци", защото открива групи с произволна форма).
+# I should check if there's any context I'm missing. The user wrote the question in Bulgarian, so maybe they expect me to know a common problem from Bulgarian math competitions or textbooks. But I don't have that information.
 # 
-# 2.  **Плътност и разстояние:**
-#     *   Групите се определят от това колко близо са точките една до друга. Ако има голямо разстояние (празно пространство) между две групи точки, те се считат за отделни групи.
+# Alternatively, maybe "облак от точки" refers to a specific term in clustering, like a point cloud in data science, but again, without the actual points, I can't determine the number of groups.
 # 
-# 3.  **Размер на данните:**
-#     *   При много големи масиви от данни може да има "шум" (точки, които не принадлежат на нито една група).
+# The user might have intended to attach an image or a list of coordinates but forgot. In that case, I need to ask for clarification. Since I can't see any data, I should respond that the question is incomplete and request the details of the point cloud.
 # 
-# **Какво можете да направите сега?**
-# *   **Изтеглете изображение:** Ако
+# Let me make sure: the user's message is only the Bulgarian sentence. No numbers, no coordinates, nothing. So yeah, definitely missing data. My response should politely point out
 ```
 
 **Remark:** The functions `openrouter-chat-completion` or `openrouter-completion` can be used instead in the examples above.
@@ -106,146 +122,53 @@ The current OpenRouter models can be found with the function `openrouter-models`
 openrouter-models.elems;
 ```
 ```
-# 340
+# 336
 ```
 
 ----
 
 ## Code generation
 
-There are two types of completions : text and chat. Let us illustrate the differences
-of their usage by Raku code generation. Here is a text completion:
+Here is an example of Raku code generation:
 
-```raku
+```raku, results=asis, output-prompt=>
 openrouter-completion(
         'generate Raku code for making a loop over a list',
         max-tokens => 1024,
         format => 'values');
 ```
-```
-# Here's a simple example of a loop over a list in Raku:
-# 
-# ```raku
-# my @list = <apple banana cherry>;
-# for $item in @list {
-#     say $item;
-# }
-# ```
-# 
-# ### Explanation:
-# - `my @list = <apple banana cherry>;` creates a list with three elements.
-# - `for $item in @list { ... }` iterates over each element in the list, assigning it to `$item` in each iteration.
-# - `say $item;` prints the current item.
-# 
-# ### Alternative approaches:
-# 1. Using `.each` method:
-#    ```raku
-#    @list.each({ say $_; });
-#    ```
-# 
-# 2. With index (if needed):
-#    ```raku
-#    for @list.kv -> $index, $value {
-#        say "Index: $index, Value: $value";
-#    }
-#    ```
-# 
-# Let me know if you want to modify the list during the loop or handle specific conditions!
-```
-
-Here is a chat completion:
-
-```raku, results=asis
-openrouter-completion(
-        'generate Raku code for making a loop over a list',
-        max-tokens => 1024,
-        format => 'values');
-```
-
-> Here’s a quick “cook‑book” style snippet showing the most common ways to iterate over a list (i.e. an **Array** or **List**) in Raku.
-
-```raku
-# -------------------------------------------------
-# 1️⃣  Simple `for` loop – the classic style
-# -------------------------------------------------
-my @fruits = <apple banana cherry>;
-
-for @fruits -> $fruit {
-    say "I like $fruit";
-}
-# → I like apple
-# → I like banana
-# → I like cherry
+>Here’s a minimal, idiomatic way to loop over a list (array) in Raku:
+>
+>```raku
+># Define a list of items
+>my @fruits = «apple banana cherry»;   # or: my @fruits = <apple banana cherry>;
+>
+># Loop over the list
+>for @fruits -> $fruit {               # $fruit gets each element in turn
+>    say "I like $fruit!";
+>}
+>```
+>
+>**What’s happening**
+>
+>* `@fruits` is the array (list) you want to iterate over.  
+>* The `for` keyword takes a *loop variable* (`$fruit` here) and a *list* (or any iterable).  
+>* The block (`{ … }`) is executed once for each element, with `$fruit` bound to that element.
+>
+>---
+>
+>### Alternative styles
+>
+>| Style | Syntax | When to use |
+>|-------|--------|-------------|
+>| **`for` with a range** | `for 0..4 -> $i { say $i }` | When you need numeric indices. |
+>| **`each` method** | `@fruits.each: { |$f| say "I like $f!" }` | If you prefer a method‑call style. |
+>| **`while` loop** | `my $i = 0; while $i < @fruits.elems { say @fruits[$i]; $i++ }` | When you need explicit control over the loop variable. |
+>| **`map` (transform)** | `my @upper = @fruits.map({ $_.uc })` | When you want to produce a new list rather than just iterate. |
+>
+>All of these are valid Raku ways to “loop over a list”. The `for … -> $var` form shown first is the most common and readable for simple iteration.
 
 
-# -------------------------------------------------
-# 2️⃣  `while` loop with an explicit index
-# -------------------------------------------------
-my @numbers = (1..5);
-
-my $i = 0;
-while $i < @numbers {
-    say "Number $i is @numbers[$i]";
-    $i++;
-}
-# → Number 0 is 1
-# → Number 1 is 2
-# → …
-
-
-# -------------------------------------------------
-# 3️⃣  `map` / `for` as a functional transformation
-# -------------------------------------------------
-# If you just want to produce a new list from an existing one:
-my @squared = @numbers.map({ $_ * $_ });
-say @squared;                # (1 4 9 16 25)
-
-
-# -------------------------------------------------
-# 4️⃣  `loop` with a `break` / `continue`
-# -------------------------------------------------
-my @words = <one two three four>;
-
-loop {
-    my $w = shift @words;      # take the first element
-    last unless defined $w;    # stop when the list is empty
-
-    # Do something with $w …
-    say "Processing $w";
-
-    # imagine we want to skip the word "three"
-    continue if $w eq 'three';
-}
-# → Processing one
-# → Processing two
-# → Processing four
-
-
-# -------------------------------------------------
-# 5️⃣  Using `for` with a range (still works like a list)
-# -------------------------------------------------
-for 0..9 -> $digit {
-    say "Digit $digit";
-}
-# → prints 0 … 9
-
-
-# -------------------------------------------------
-# 6️⃣  `each` on a Hash (list of key/value pairs)
-# -------------------------------------------------
-my %person = (
-    name => 'Ada',
-    age  => 28,
-    city => 'London',
-);
-
-for %person.kv -> $key, $value {
-    say "$key => $value";
-}
-# → name => Ada
-# → age => 28
-# → city => London
-```
 
 ----
 
@@ -271,7 +194,7 @@ $embs.elems;
 ```
 
 Here we show:
-- That the result is an array of four vectors each with length 1536
+- That the result is an array of four vectors each with length 2048
 - The distributions of the values of each vector
 
 ```raku
@@ -285,16 +208,16 @@ records-summary($embs.kv.Hash.&transpose);
 ```
 # $embs.elems : 4
 # $embs>>.elems : 2048 2048 2048 2048
-# +---------------------------------+----------------------------+-------------------------------+-------------------------------+
-# | 0                               | 1                          | 3                             | 2                             |
-# +---------------------------------+----------------------------+-------------------------------+-------------------------------+
-# | Min    => -0.0635793            | Min    => -0.06656983      | Min    => -0.07346587         | Min    => -0.07459323         |
-# | 1st-Qu => -0.015092965          | 1st-Qu => -0.0138468735    | 1st-Qu => -0.015567071        | 1st-Qu => -0.0140324955       |
-# | Mean   => -0.000263294377674707 | Mean   => 0.00021836274984 | Mean   => -0.0006943063709395 | Mean   => 0.00017858671517871 |
-# | Median => -0.00051278308        | Median => 0.0007351393     | Median => -0.00105322755      | Median => 0.0000378788645     |
-# | 3rd-Qu => 0.0141714455          | 3rd-Qu => 0.0147447938     | 3rd-Qu => 0.0146305985        | 3rd-Qu => 0.014554683         |
-# | Max    => 0.10637062            | Max    => 0.114378534      | Max    => 0.09702697          | Max    => 0.13532495          |
-# +---------------------------------+----------------------------+-------------------------------+-------------------------------+
+# +-------------------------------+--------------------------------+-------------------------------+-------------------------------+
+# | 0                             | 3                              | 2                             | 1                             |
+# +-------------------------------+--------------------------------+-------------------------------+-------------------------------+
+# | Min    => -0.063579306        | Min    => -0.07346588          | Min    => -0.07459322         | Min    => -0.06656984         |
+# | 1st-Qu => -0.0150929665       | 1st-Qu => -0.015567072         | 1st-Qu => -0.0140324945       | 1st-Qu => -0.0138468755       |
+# | Mean   => -0.0002632943983959 | Mean   => -0.00069430643018848 | Mean   => 0.00017858672354932 | Mean   => 0.00021836279124072 |
+# | Median => -0.00051278313      | Median => -0.0010532276        | Median => 0.0000378788605     | Median => 0.0007351394        |
+# | 3rd-Qu => 0.01417144675       | 3rd-Qu => 0.0146306005         | 3rd-Qu => 0.014554682         | 3rd-Qu => 0.014744796         |
+# | Max    => 0.10637063          | Max    => 0.097026974          | Max    => 0.13532494          | Max    => 0.11437856          |
+# +-------------------------------+--------------------------------+-------------------------------+-------------------------------+
 ```
 
 Here we find the corresponding dot products and (cross-)tabulate them:
@@ -311,7 +234,7 @@ say to-pretty-table(cross-tabulate(@ct, 'i', 'j', 'dot'), field-names => (^$embs
 # | 0 |  1.000000 | 0.055109 | 0.176711 | -0.002432 |
 # | 1 |  0.055109 | 1.000000 | 0.228417 |  0.049568 |
 # | 2 |  0.176711 | 0.228417 | 1.000000 |  0.101734 |
-# | 3 | -0.002432 | 0.049568 | 0.101734 |  1.000000 |
+# | 3 | -0.002432 | 0.049568 | 0.101734 |  1.000001 |
 # +---+-----------+----------+----------+-----------+
 ````
 
@@ -349,21 +272,19 @@ END
 Here is an example of chat completion with emojification:
 
 ```raku
-[ 
-    assistant => $preEmojify, 
+[
+    assistant => $preEmojify,
     user => 'Python sucks, Raku rocks, and Perl is annoying'
 ]
 ==> openrouter-chat-completion(:1024max-tokens, format => 'values')
 ```
 ```
-# Python 🐍 sucks, Raku 💎 rocks, and Perl 🐫 is annoying
+# 🐍 Python sucks, 💎 Raku rocks, and 🐛 Perl is annoying
 ```
 
 -------
 
 ## Command Line Interface
-
-### Playground access
 
 The package provides a Command Line Interface (CLI) script:
 
@@ -401,7 +322,7 @@ graph TD
 	UI[/Some natural language text/]
 	TO[/"OpenRouter<br/>Processed output"/]
 	WR[[Web request]]
-    OpenRouter{{https://openrouter.ai/api}}
+	OpenRouter{{https://openrouter.ai/api}}
 	PJ[Parse JSON]
 	Q{Return<br>hash?}
 	MSTC[Compose query]
@@ -426,6 +347,40 @@ graph TD
 	Q --> |no|TO
 	PJ --> TO
 ```
+----
+
+## Integration with "LLM::Functions"
+
+"WWW::OpenRouter" is integrated with ["LLM::Functions"](https://raku.land/zef:antononcube/LLM::Functions), [AAp3]. Here is an LLM-configuration object for accessing OpenRouter's LLMs:
+
+```raku
+use LLM::Functions;
+
+my $conf = llm-configuration('OpenRouter');
+```
+```
+# LLM::Configuration(:name("openrouter"), :model("openrouter/free"), :module("WWW::OpenRouter"), :max-tokens(2048))
+```
+
+Here is an LLM-invocation using the LLM-configuration above:
+
+```raku
+llm-synthesize('Hi! What model are you? From which service? When you were trained?', e => $conf)
+```
+```
+# My name is Nemotron 3 Ultra. I was created by NVIDIA researchers.
+```
+
+----
+
+## Integration with "Jupyter::Chatbook"
+
+**Jupyter chatbook** (i.e., LLM-enabled Jupyter notebook) is integrated with the package "WWW::OpenRouter" in three ways:
+
+- "WWW::OpenRouter" is loaded in each chatbook session
+- The magic cell `%%openrouter` can be used to access with OpenRouter's LLMs
+
+For more details see the notebook ["Raku-access-to-XAI-LLMs.ipynb"](docs/Raku-access-to-XAI-LLMs.ipynb) or [AA1].
 
 --------
 

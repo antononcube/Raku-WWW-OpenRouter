@@ -77,24 +77,15 @@ openrouter-models.elems;
 
 ## Code generation
 
-There are two types of completions : text and chat. Let us illustrate the differences
-of their usage by Raku code generation. Here is a text completion:
+Here is an example of Raku code generation:
 
-```raku
+```raku, results=asis, output-prompt=>
 openrouter-completion(
         'generate Raku code for making a loop over a list',
         max-tokens => 1024,
         format => 'values');
 ```
 
-Here is a chat completion:
-
-```raku, results=asis
-openrouter-completion(
-        'generate Raku code for making a loop over a list',
-        max-tokens => 1024,
-        format => 'values');
-```
 
 ----
 
@@ -117,7 +108,7 @@ $embs.elems;
 ```
 
 Here we show:
-- That the result is an array of four vectors each with length 1536
+- That the result is an array of four vectors each with length 2048
 - The distributions of the values of each vector
 
 ```raku
@@ -174,8 +165,6 @@ Here is an example of chat completion with emojification:
 
 ## Command Line Interface
 
-### Playground access
-
 The package provides a Command Line Interface (CLI) script:
 
 ```shell
@@ -222,6 +211,34 @@ graph TD
 	Q --> |no|TO
 	PJ --> TO
 ```
+----
+
+## Integration with "LLM::Functions"
+
+"WWW::OpenRouter" is integrated with ["LLM::Functions"](https://raku.land/zef:antononcube/LLM::Functions), [AAp3]. Here is an LLM-configuration object for accessing OpenRouter's LLMs:
+
+```raku
+use LLM::Functions;
+
+my $conf = llm-configuration('OpenRouter');
+```
+
+Here is an LLM-invocation using the LLM-configuration above:
+
+```raku
+llm-synthesize('Hi! What model are you? From which service? When you were trained?', e => $conf)
+```
+
+----
+
+## Integration with "Jupyter::Chatbook"
+
+**Jupyter chatbook** (i.e., LLM-enabled Jupyter notebook) is integrated with the package "WWW::OpenRouter" in three ways:
+
+- "WWW::OpenRouter" is loaded in each chatbook session
+- The magic cell `%%openrouter` can be used to access with OpenRouter's LLMs
+
+For more details see the notebook ["Raku-access-to-XAI-LLMs.ipynb"](docs/Raku-access-to-XAI-LLMs.ipynb) or [AA1].
 
 --------
 
