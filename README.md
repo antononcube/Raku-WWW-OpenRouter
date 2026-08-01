@@ -298,7 +298,7 @@ END
 # Do not respond with only emoji, most of the text should remain as normal words.
 ```
 
-Here is an example of chat completion with emojification:
+Here is an example of a chat completion with emojification:
 
 ```raku
 [
