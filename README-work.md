@@ -167,6 +167,9 @@ Here is an example of chat completion with emojification:
 ==> openrouter-chat-completion(:1024max-tokens, format => 'values')
 ```
 
+**Remark:** The "Emojify" prompt is provided by the package ["LLM::Prompts"](https://raku.land/zef:antononcube/LLM::Prompts), [AAp4],
+and can be obtained with `llm-prompt('Emojify')()`.
+
 -------
 
 ## Command Line Interface
@@ -239,7 +242,7 @@ llm-synthesize('Hi! What model are you? From which service? When you were traine
 
 ## Integration with "Jupyter::Chatbook"
 
-**Jupyter chatbook** (i.e., LLM-enabled Jupyter notebook) is integrated with the package "WWW::OpenRouter" in three ways:
+**Jupyter chatbook** (i.e., LLM-enabled Jupyter notebook) is integrated with the package "WWW::OpenRouter" in two ways:
 
 - "WWW::OpenRouter" is loaded in each chatbook session
 - The magic cell `%%openrouter` can be used to access with OpenRouter's LLMs
